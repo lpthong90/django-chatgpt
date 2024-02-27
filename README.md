@@ -1,5 +1,5 @@
 <p align="center">
-    <em>Using Ruby on Rails with Hotwire to demo a simple version of Facebook Messenger.</em>
+    <em>Using Django to demo a simple ChatGPT version of OpenAI.</em>
 </p>
 
 ---
