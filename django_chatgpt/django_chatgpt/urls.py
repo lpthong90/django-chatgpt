@@ -18,7 +18,9 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    path('', include('chat.urls.home')),
     path('admin/', admin.site.urls),
-    path('chats/', include('chat.urls')),  # Include the blog app URLs
+    path('accounts/', include('accounts.urls')),
+    path('c/', include('chat.urls.chat', namespace='chat')),
     path("__reload__/", include("django_browser_reload.urls")),
 ]

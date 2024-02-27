@@ -1,4 +1,4 @@
-<form class="new_message" id="new_message" action="/chat/" accept-charset="UTF-8" method="post">
+<form class="new_message" id="new_message" action="{% url 'chat:chat_list' %}" accept-charset="UTF-8" method="post">
     {% csrf_token %}
     <label for="{{ form.message.id_for_label }}" class="sr-only">Content</label>
     <div class="flex items-center bg-gray-50 px-3 py-2 dark:bg-gray-700">

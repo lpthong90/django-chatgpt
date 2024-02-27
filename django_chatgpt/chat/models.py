@@ -5,6 +5,10 @@ class Chat(models.Model):
     title = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    @property
+    def name(self):
+        return f"Chat {self.title[0:8]}"
+
     def __str__(self):
         return self.title
 

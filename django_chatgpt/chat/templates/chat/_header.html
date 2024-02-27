@@ -16,17 +16,40 @@
             </div>
 
             <div class="font-medium dark:text-white">
-              <div>{{ current_chat.title }}</div>
-              <div class="text-sm text-gray-500 dark:text-gray-400">Active 3h ago</div>
+              {% if current_chat is not None %}
+                <div>{{ current_chat.name }}</div>
+<!--                <div class="text-sm text-gray-500 dark:text-gray-400">Active 3h ago</div>-->
+              {% else %}
+                <div>New Chat</div>
+              {% endif %}
             </div>
           </div>
       </div>
       <div class="flex items-center lg:order-2">
-        <a href="#" class="mr-1 rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:ring-4 focus:ring-gray-300 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-600" role="menuitem">
-          <svg class="w-6 h-6 p-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3"/>
-        </svg>
-        </a>
+<!--        <a href="#" class="mr-1 rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:ring-4 focus:ring-gray-300 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-600" role="menuitem">-->
+<!--          <svg class="w-6 h-6 p-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16">-->
+<!--            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3"/>-->
+<!--        </svg>-->
+<!--        </a>-->
+
+        <form class="new_message" id="new_message" action="{% url 'signout' %}" accept-charset="UTF-8" method="post">
+            {% csrf_token %}
+<!--            <label class="sr-sonly" for="message_content">Logout</label>-->
+<!--            <div class="flex items-center bg-gray-50 px-3 py-2 dark:bg-gray-700">-->
+<!--              <input class="mx-4 block w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500" placeholder="Your message..." type="text" name="message[content]" id="message_content">-->
+<!--              <button type="submit" class="inline-flex cursor-pointer justify-center rounded-full p-2 text-blue-600 hover:bg-blue-100 dark:text-blue-500 dark:hover:bg-gray-600">-->
+<!--                <svg class="h-5 w-5 rotate-90 rtl:-rotate-90" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">-->
+<!--                  <path d="m17.914 18.594-8-18a1 1 0 0 0-1.828 0l-8 18a1 1 0 0 0 1.157 1.376L8 18.281V9a1 1 0 0 1 2 0v9.281l6.758 1.689a1 1 0 0 0 1.156-1.376Z"></path>-->
+<!--                </svg>-->
+<!--                <span class="sr-only">Send message</span>-->
+<!--              </button>-->
+<!--            </div>-->
+          <button type="submit" class="mr-1 rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-900 focus:ring-4 focus:ring-gray-300 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-600">
+            <svg class="w-6 h-6 p-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 16">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3"/>
+            </svg>
+          </button>
+        </form>
       </div>
     </div>
   </nav>

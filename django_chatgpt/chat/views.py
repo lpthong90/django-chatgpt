@@ -1,10 +1,22 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 import uuid
 
 from .forms import MessageForm
 from .models import Chat, Message
 
 
+@login_required
+def home(request):
+    if request.method == "POST":
+        pass
+    else:
+        chats = Chat.objects.all()
+        form = MessageForm()
+        return render(request, 'chat/index.html', {'form': form, 'chats': chats})
+
+
+@login_required
 def chat_list(request):
     if request.method == "POST":
         chat = Chat(title=str(uuid.uuid4()))
@@ -23,6 +35,7 @@ def chat_list(request):
     return render(request, 'chat/index.html', {'form': form, 'chats': chats})
 
 
+@login_required
 def detail(request, chat_id):
     current_chat: Chat = get_object_or_404(Chat, pk=chat_id)
     chats = Chat.objects.all()
@@ -39,6 +52,7 @@ def detail(request, chat_id):
             {'form': form, 'current_chat': current_chat, 'chats': chats, 'message_list': current_chat.messages.all()})
 
 
+@login_required
 def message_index(request, chat_id):
     current_chat = get_object_or_404(Chat, pk=chat_id)
 
