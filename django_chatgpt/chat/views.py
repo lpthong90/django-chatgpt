@@ -4,6 +4,7 @@ import uuid
 
 from .forms import MessageForm
 from .models import Chat, Message
+from .services import create_new_message, send_message_to_chatgpt
 
 
 @login_required
@@ -11,7 +12,7 @@ def home(request):
     if request.method == "POST":
         pass
     else:
-        chats = Chat.objects.all()
+        chats = request.user.chats.all()
         form = MessageForm()
         return render(request, 'chat/index.html', {'form': form, 'chats': chats})
 
@@ -19,18 +20,18 @@ def home(request):
 @login_required
 def chat_list(request):
     if request.method == "POST":
-        chat = Chat(title=str(uuid.uuid4()))
+        chat = Chat(title=str(uuid.uuid4()), owner=request.user)
         form = MessageForm(request.POST)
         if form.is_valid():
-            message = form.save(commit=False)
-            message.chat = chat  # Associate the message with the retrieved chat
-            message.save()  # Save the message to the database
-            return redirect('chat_detail', chat_id=chat.id)
+            chat.save()
+            create_new_message(chat, form.save(commit=False))
+
+            return redirect('chat:detail', chat_id=chat.id)
 
     else:
         # show default without chat
         form = MessageForm()
-        chats = Chat.objects.all()
+        chats = request.user.chats.all()
 
     return render(request, 'chat/index.html', {'form': form, 'chats': chats})
 
@@ -38,12 +39,11 @@ def chat_list(request):
 @login_required
 def detail(request, chat_id):
     current_chat: Chat = get_object_or_404(Chat, pk=chat_id)
-    chats = Chat.objects.all()
+    chats = request.user.chats.all()
 
-    if request.method == "DELETE":
-        # delete chat
-        # current_chat
-        return redirect('chat_list')
+    if request.method == 'POST' and request.POST.get('action') == 'delete':
+        current_chat.delete()
+        return redirect('chat:list')
     else:
         form = MessageForm()
 
@@ -59,10 +59,8 @@ def message_index(request, chat_id):
     if request.method == "POST":
         form = MessageForm(request.POST)
         if form.is_valid():
-            message = form.save(commit=False)
-            message.chat = current_chat # Associate the message with the retrieved chat
-            message.save()  # Save the message to the database
-            return redirect('chat_detail', chat_id=current_chat.id)
+            create_new_message(current_chat, form.save(commit=False))
+            return redirect('chat:detail', chat_id=current_chat.id)
 
     else:
         # show default without chat

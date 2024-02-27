@@ -35,16 +35,30 @@
                           <div class="flex items-center gap-4 px-2">
                               <div class="font-medium dark:text-white">
 <!--                                  <a href="/chats/{{chat.id}}" >-->
-                                  <a href="{% url 'chat:chat_detail' chat_id=chat.id %}">
+                                  <a href="{% url 'chat:detail' chat_id=chat.id %}">
                                     <div>{{chat.name}}</div>
                                   </a>
                                   {% if current_chat.id == chat.id %}
-                                      <a href="" class="flex items-center justify-center text-token-text-primary transition hover:text-token-text-secondary radix-state-open:text-token-text-secondary absolute top-0 right-0 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full">
-                                          <svg class="w-[23px] h-[23px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 12h14"/>
-                                          </svg>
-                                      </a>
-                                    {% endif %}
+                                    <form id="delete_{{chat.id}}" action="{% url 'chat:detail' chat_id=chat.id %}" accept-charset="UTF-8" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="action" value="delete">
+                                        <button type="submit" class="flex items-center justify-center text-token-text-primary transition hover:text-token-text-secondary radix-state-open:text-token-text-secondary absolute top-0 right-0 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full">
+                                            <svg class="w-[23px] h-[23px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 12h14"/>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                  {% else %}
+                                    <form id="delete_{{chat.id}}" action="{% url 'chat:detail' chat_id=chat.id %}" accept-charset="UTF-8" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="action" value="delete">
+                                        <button type="submit" class="flex items-center justify-center text-token-text-primary transition hover:text-token-text-secondary radix-state-open:text-token-text-secondary absolute top-0 right-0 hover:bg-gray-200 dark:hover:bg-gray-800 rounded-full">
+                                            <svg class="w-[16px] h-[16px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 12h14"/>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                  {% endif %}
                               </div>
                           </div>
                       </div>
@@ -52,7 +66,7 @@
 
                 </li>
             {% empty %}
-                <li>No chats available.</li>
+<!--                <li>No chats available.</li>-->
             {% endfor %}
 
 <!--            <li id="conversation_1">-->

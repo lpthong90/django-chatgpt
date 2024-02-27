@@ -899,6 +899,10 @@ select {
   height: 2rem;
 }
 
+.h-\[16px\] {
+  height: 16px;
+}
+
 .h-\[23px\] {
   height: 23px;
 }
@@ -929,6 +933,10 @@ select {
 
 .w-8 {
   width: 2rem;
+}
+
+.w-\[16px\] {
+  width: 16px;
 }
 
 .w-\[23px\] {
