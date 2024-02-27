@@ -1,0 +1,29 @@
+<!-- templates/index.html -->
+
+{% extends "_base.html" %}
+
+{% block content %}
+
+<div class="flex h-screen w-screen">
+    {% include "chat/_aside.html" %}
+  <div class="flex h-screen w-screen flex-col justify-between sm:ml-64">
+    {% include "chat/_header.html" %}
+    <div class="flex flex-col space-y-4 p-3 overflow-y-scroll scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+      <div class="scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch flex flex-col space-y-4 overflow-y-auto p-3">
+        <div id="messages" class="flex-col flex mr-4 flex-grow">
+            {% if current_chat is not None %}
+                {% include 'chat/_message_list.html' with message_list=message_list %}
+            {% else %}
+                <div class="flex place-content-start items-start gap-2.5">
+                  <p class="py-2.5 text-sm font-normal text-gray-900">No Chat</p>
+                </div>
+            {% endif %}
+
+        </div>
+      </div>
+    </div>
+    {% include "chat/_footer.html" %}
+  </div>
+</div>
+
+{% endblock content %}
