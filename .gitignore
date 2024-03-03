@@ -4,3 +4,4 @@ venv
 **/*.sqlite3
 **/__pycache__/
 django_chatgpt/static/CACHE
+**/.DS_Store
